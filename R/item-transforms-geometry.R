@@ -54,14 +54,10 @@ item_transform_rotate <- function(x, angle, interpolation = 2, expand = TRUE, fi
 
 #' @export
 item_transform_rotate.dataset <- function(x, angle, interpolation = 2, expand = TRUE, fill = 0) {
-  original_getitem <- x$.getitem
-  unlockBinding(".getitem", as.environment(x))
-  x$.getitem <- function(index) {
-    item <- original_getitem(index)
+  add_dataset_transform(x, "item_transform", function(item) {
     item_transform_rotate(item, angle = angle, interpolation = interpolation,
                           expand = expand, fill = fill)
-  }
-  x
+  })
 }
 
 #' @export
@@ -259,13 +255,9 @@ item_transform_crop <- function(x, top, left, height, width) {
 
 #' @export
 item_transform_crop.dataset <- function(x, top, left, height, width) {
-  original_getitem <- x$.getitem
-  unlockBinding(".getitem", as.environment(x))
-  x$.getitem <- function(index) {
-    item <- original_getitem(index)
+  add_dataset_transform(x, "item_transform", function(item) {
     item_transform_crop(item, top, left, height, width)
-  }
-  x
+  })
 }
 
 #' @export
@@ -414,13 +406,7 @@ item_transform_hflip <- function(x) {
 
 #' @export
 item_transform_hflip.dataset <- function(x) {
-  original_getitem <- x$.getitem
-  unlockBinding(".getitem", as.environment(x))
-  x$.getitem <- function(index) {
-    item <- original_getitem(index)
-    item_transform_hflip(item)
-  }
-  x
+  add_dataset_transform(x, "item_transform", item_transform_hflip)
 }
 
 #' @export
@@ -516,13 +502,7 @@ item_transform_vflip <- function(x) {
 
 #' @export
 item_transform_vflip.dataset <- function(x) {
-  original_getitem <- x$.getitem
-  unlockBinding(".getitem", as.environment(x))
-  x$.getitem <- function(index) {
-    item <- original_getitem(index)
-    item_transform_vflip(item)
-  }
-  x
+  add_dataset_transform(x, "item_transform", item_transform_vflip)
 }
 
 #' @export
@@ -637,13 +617,9 @@ item_transform_center_crop.default <- function(x, size) {
 
 #' @export
 item_transform_center_crop.dataset <- function(x, size) {
-  original_getitem <- x$.getitem
-  unlockBinding(".getitem", as.environment(x))
-  x$.getitem <- function(index) {
-    item <- original_getitem(index)
+  add_dataset_transform(x, "item_transform", function(item) {
     item_transform_center_crop(item, size = size)
-  }
-  x
+  })
 }
 
 #' @export
@@ -875,16 +851,12 @@ item_transform_affine.image_with_segmentation_mask <- function(x, angle = 0,
 item_transform_affine.dataset <- function(x, angle = 0, translate = c(0, 0),
                                           scale = 1, shear = 0, interpolation = 0,
                                           fill = NULL, center = NULL) {
-  original_getitem <- x$.getitem
-  unlockBinding(".getitem", as.environment(x))
-  x$.getitem <- function(index) {
-    item <- original_getitem(index)
+  add_dataset_transform(x, "item_transform", function(item) {
     item_transform_affine(item, angle = angle, translate = translate,
                           scale = scale, shear = shear,
                           interpolation = interpolation, fill = fill,
                           center = center)
-  }
-  x
+  })
 }
 
 #' Pad a dataset item
@@ -932,13 +904,9 @@ item_transform_pad <- function(x, padding, fill = 0, padding_mode = "constant") 
 
 #' @export
 item_transform_pad.dataset <- function(x, padding, fill = 0, padding_mode = "constant") {
-  original_getitem <- x$.getitem
-  unlockBinding(".getitem", as.environment(x))
-  x$.getitem <- function(index) {
-    item <- original_getitem(index)
+  add_dataset_transform(x, "item_transform", function(item) {
     item_transform_pad(item, padding = padding, fill = fill, padding_mode = padding_mode)
-  }
-  x
+  })
 }
 
 #' @export
@@ -1109,18 +1077,14 @@ item_transform_perspective.default <- function(x, startpoints, endpoints, interp
 #' @export
 item_transform_perspective.dataset <- function(x, startpoints, endpoints, interpolation = 2,
                                                fill = NULL) {
-  original_getitem <- x$.getitem
-  unlockBinding(".getitem", as.environment(x))
-  x$.getitem <- function(index) {
-    item <- original_getitem(index)
+  add_dataset_transform(x, "item_transform", function(item) {
     item_transform_perspective(item,
       startpoints = startpoints,
       endpoints = endpoints,
       interpolation = interpolation,
       fill = fill
     )
-  }
-  x
+  })
 }
 
 #' @export
@@ -1236,13 +1200,9 @@ item_transform_resize.default <- function(x, size, interpolation = 2) {
 
 #' @export
 item_transform_resize.dataset <- function(x, size, interpolation = 2) {
-  original_getitem <- x$.getitem
-  unlockBinding(".getitem", as.environment(x))
-  x$.getitem <- function(index) {
-    item <- original_getitem(index)
+  add_dataset_transform(x, "item_transform", function(item) {
     item_transform_resize(item, size = size, interpolation = interpolation)
-  }
-  x
+  })
 }
 
 #' @export
